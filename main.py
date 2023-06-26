@@ -11,4 +11,4 @@ def saveFile(mas_url):
         writer.writerow(mas_url)
 
 if __name__ == '__main__':
-    main()
+    bot.infinity_polling()

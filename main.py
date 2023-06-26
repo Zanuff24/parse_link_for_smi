@@ -1,15 +1,14 @@
 import requests
 import csv
 import telebot
+import data
 
-bot =
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+bot = telebot.TeleBot(data.token)
 
+def saveFile(mas_url):
+    with open('link_list.csv', "a", encoding='cp1251', newline='') as fill:
+        writer = csv.writer(fill, delimiter=';')
+        writer.writerow(mas_url)
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()

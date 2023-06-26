@@ -2,13 +2,24 @@ import requests
 import csv
 import telebot
 import data
+import datetime
 
 bot = telebot.TeleBot(data.token)
 
-def saveFile(mas_url):
+def saveFile(link, chat):
     with open('link_list.csv', "a", encoding='cp1251', newline='') as fill:
-        writer = csv.writer(fill, delimiter=';')
-        writer.writerow(mas_url)
+        data_now = datetime.datetime.now()
+        names = ["data", "smi", "link", "chat"]
+        file_writer = csv.DictWriter(fill, delimiter=",",
+                                     lineterminator="\r", fieldnames=names)
+        file_writer.writeheader()
+        file_writer.writerow({"data": data_now, "smi": 'smi', "link": link, "chat": chat})
 
-if __name__ == '__main__':
-    bot.infinity_polling()
+
+@bot.message_handler(content_types=["text"])
+def any_mes(message):
+    print(message.chat.id, message.text)
+    saveFile(message.chat.id, message.text)
+
+
+bot.polling(none_stop=True)

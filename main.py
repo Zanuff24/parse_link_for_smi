@@ -5,6 +5,7 @@ import data
 import datetime
 
 bot = telebot.TeleBot(data.token)
+bd = {}
 
 def saveFile(link, chat):
     with open('link_list.csv', "a", encoding='cp1251', newline='') as fill:
@@ -15,6 +16,11 @@ def saveFile(link, chat):
         file_writer.writeheader()
         file_writer.writerow({"data": data_now, "smi": 'smi', "link": link, "chat": chat})
 
+@bot.message_handler(commands=["start"])
+def start(message):
+    bd = {'id': message.chat.id,
+          'link': '',
+          'comment': ''}
 
 @bot.message_handler(content_types=["text"])
 def any_mes(message):

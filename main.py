@@ -58,7 +58,7 @@ def keyboard():
 
 @bot.message_handler(content_types=["text"])
 def any_mes(message):
-    bd.setdefault(message.chat.id, message.text)
+    bd[message.chat.id] = message.text
 
     key = keyboard()
     bot.send_message(message.chat.id, "сми", reply_markup=key)
@@ -70,8 +70,9 @@ def any_mes(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
     # Если сообщение из чата с ботом
-    if call.message:
-        if call.data == "sa":
+
+    match call.data:
+        case "sa":
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="сми")
             bot.send_message(call.message.chat.id, text=f'link{call.message.chat.id} + {bd[call.message.chat.id]}')
             saveFile(call.message.chat.id, bd[call.message.chat.id], 'Советская Адыгея')

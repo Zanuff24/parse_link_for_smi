@@ -6,7 +6,7 @@ import data
 import datetime
 import smi_list
 
-bot = telebot.TeleBot(data.token) #https://t.me/parse_smi_bot
+bot = telebot.TeleBot(data.token)
 
 # dict. хранит запись вида id чата с сообщением, которое хранит последний отправленный текст от пользователя
 # текст должен содержать ссылку + комментарий к ссылке
@@ -33,6 +33,11 @@ def start(message):
     bot.send_message(message.chat.id, "отправьте сообщение в формате: \n" +
                      "<b>ссылка комментарий </b>\n" +
                      "одна ссылка и комментарий за один раз", parse_mode='html')
+
+@bot.message_handler(commands=['dfhfghfghfghfgh'])
+def send(message):
+    with open('link_list.csv','rb') as doc:
+        bot.send_document(message.chat.id, doc, "файл", parse_mode='html')
 #создание клавиатуры. список кнопок берется из записей smi_l файла smi_list
 
 def keyboard():

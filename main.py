@@ -1,10 +1,10 @@
-import requests
+
 import csv
 import telebot
 from telebot import types
-import data
 import datetime
 import smi_list
+import data
 
 bot = telebot.TeleBot(data.token)
 
@@ -36,10 +36,10 @@ def start(message):
 
 @bot.message_handler(commands=['dfhfghfghfghfgh'])
 def send(message):
-    with open('link_list.csv','rb') as doc:
-        bot.send_document(message.chat.id, doc, "файл", parse_mode='html')
-#создание клавиатуры. список кнопок берется из записей smi_l файла smi_list
+    with open('link_list.csv', 'rb') as doc:
+        bot.send_document(message.chat.id, doc,  parse_mode='html')
 
+#создание клавиатуры. список кнопок берется из записей smi_l файла smi_list
 def keyboard():
     kb = types.InlineKeyboardMarkup()
     for el, name in smi_list.smi_l.items():
@@ -50,7 +50,7 @@ def keyboard():
 @bot.message_handler(content_types=["text"])
 def any_mes(message):
     if len(message.text.split()) != 2:
-        bot.send_message(message.chat.id, "отправьте сообщение в формате: \n"+
+        bot.send_message(message.chat.id, "отправьте сообщение в формате: \n" +
                          "<b>ссылка комментарий </b>\n" +
                          "одна ссылка и комментарий за один раз", parse_mode='html')
     else:
